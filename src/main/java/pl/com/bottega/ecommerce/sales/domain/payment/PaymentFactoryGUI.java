@@ -4,12 +4,6 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
-
-public class PaymentFactory implements PaymentFactoryGUI {
-
-    @Override
-    public Payment createPayment(Id aggregateId, ClientData clientData, Money amount) {
-        return new Payment(aggregateId, clientData,amount);
-    }
-
+public interface PaymentFactoryGUI {
+    Payment createPayment(Id aggregateId, ClientData clientData, Money amount);
 }

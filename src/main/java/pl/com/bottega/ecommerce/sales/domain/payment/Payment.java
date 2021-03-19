@@ -17,7 +17,7 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 import pl.com.bottega.ecommerce.sales.domain.invoicing.Invoice;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
-public class Payment implements PaymentFactory{
+public class Payment{
 
     private ClientData clientData;
 
@@ -37,8 +37,4 @@ public class Payment implements PaymentFactory{
         return new Payment(id, clientData, amount.multiplyBy(-1));
     }
 
-    @Override
-    public Payment createPayment(Id aggregateId, ClientData clientData, Money amount) {
-        return new Payment(aggregateId, clientData,amount);
-    }
 }
