@@ -21,36 +21,19 @@ import pl.com.bottega.ecommerce.sharedkernel.Money;
 
 public class BookKeeper {
 
-    public Invoice issuance(InvoiceRequest request) {
+    public Invoice issuance(InvoiceRequest request, int country) {
         Invoice invoice = new Invoice(Id.generate(), request.getClient());
 
-        for (RequestItem item : request.getItems()) {
-            Money net = item.getTotalCost();
-            BigDecimal ratio = null;
-            String desc = null;
-
-            switch (item.getProductData().getType()) {
-                case DRUG:
-                    ratio = BigDecimal.valueOf(0.05);
-                    desc = "5% (D)";
-                    break;
-                case FOOD:
-                    ratio = BigDecimal.valueOf(0.07);
-                    desc = "7% (F)";
-                    break;
-                case STANDARD:
-                    ratio = BigDecimal.valueOf(0.23);
-                    desc = "23%";
-                    break;
-
-                default:
-                    throw new IllegalArgumentException(item.getProductData().getType() + " not handled");
+        TaxInterface strategy = null;
+        if(country==0)
+            {
+                strategy = new CountTaxPoland();
             }
-
-            Money taxValue = net.multiplyBy(ratio);
-
-            Tax tax = new Tax(taxValue, desc);
-
+        
+        for (RequestItem item : request.getItems()) {
+            
+            Money net = item.getTotalCost();
+            Tax tax= strategy.countTax(item);
             InvoiceLine invoiceLine = new InvoiceLine(item.getProductData(), item.getQuantity(), net, tax);
             invoice.addItem(invoiceLine);
         }
