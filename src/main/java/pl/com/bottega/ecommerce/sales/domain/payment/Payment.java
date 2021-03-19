@@ -37,6 +37,7 @@ public class Payment implements PaymentFactory{
         return new Payment(id, clientData, amount.multiplyBy(-1));
     }
 
+    @Override
     public Payment createPayment(Id aggregateId, ClientData clientData, Money amount) {
         return new Payment(aggregateId, clientData,amount);
     }

@@ -20,7 +20,7 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
-public class Invoice {
+public class Invoice implements InvoiceFactory{
 
     private ClientData client;
 
@@ -68,4 +68,8 @@ public class Invoice {
         return gros;
     }
 
+    @Override
+    public Invoice createInvoice(Id invoiceId, ClientData client) {
+        return new Invoice(invoiceId, client);
+    }
 }
