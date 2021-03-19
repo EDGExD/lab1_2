@@ -4,11 +4,6 @@ import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
 
 
-public class InvoiceFactory implements InvoiceFactoryGUI {
-
-    @Override
-    public Invoice createInvoice(Id invoiceId, ClientData client) {
-        return new Invoice(invoiceId, client);
-    }
-
+public interface InvoiceFactoryGUI {
+    Invoice createInvoice(Id invoiceId, ClientData client);
 }
