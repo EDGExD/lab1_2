@@ -14,9 +14,10 @@ package pl.com.bottega.ecommerce.sales.domain.payment;
 
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.ClientData;
 import pl.com.bottega.ecommerce.canonicalmodel.publishedlanguage.Id;
+import pl.com.bottega.ecommerce.sales.domain.invoicing.Invoice;
 import pl.com.bottega.ecommerce.sharedkernel.Money;
 
-public class Payment {
+public class Payment implements PaymentFactory{
 
     private ClientData clientData;
 
@@ -29,10 +30,14 @@ public class Payment {
         this.clientData = clientData;
         this.amount = amount;
     }
-
+    
     public Payment rollBack() {
         Id id = Id.generate();
 
         return new Payment(id, clientData, amount.multiplyBy(-1));
+    }
+
+    public Payment createPayment(Id aggregateId, ClientData clientData, Money amount) {
+        return new Payment(aggregateId, clientData,amount);
     }
 }
